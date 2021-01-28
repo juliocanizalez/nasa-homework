@@ -17,8 +17,12 @@ textfield.addEventListener("keydown", (e) => {
         fetch(`${URL}lon=${longitude}&lat=${latitude}&date=2018-01-01&dim=0.05&api_key=${KEY}`)
         .then(response=> response.json())
         .then((data) => {
-            console.log(data)
-            document.getElementById("img").innerHTML = `<img src="${data.url}" class="img-fluid"></img>`;
+            Swal.fire({
+                text: 'Wait for your image',
+                imageUrl: data.url,
+                showCloseButton: true,
+                showConfirmButton: false
+            })
         })  
     }
 })
