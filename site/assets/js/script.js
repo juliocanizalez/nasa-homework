@@ -9,19 +9,30 @@ textfield.addEventListener("keydown", (e) => {
     if (e.keyCode===13) {
         
         let string = document.getElementById("text").value;
-        console.log(string)
 
         let values = string.split(',');
-        
-        let longitude = values [0];
-        let latitude = values[1];
+
+        let longitude = values [1];
+        let latitude = values[0];
 
         fetch(`${URL}lon=${longitude}&lat=${latitude}&date=2018-01-01&dim=0.05&api_key=${KEY}`)
-        .then(response=> response.json())
+        .then(response=> {
+            if(response.ok){
+                response.json()
+            }else{
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Cannot get your image :(',
+                    footer:'Try latitude,longitude',
+                    showConfirmButton: false,
+                    showCloseButton: true                  
+                })
+            }
+            
+        })
         .then(data => {
             document.getElementById("img").innerHTML = `<img src="${data.url}" class="img-fluid"></img>`;
-        })
-
-        
+        })  
     }
 })
